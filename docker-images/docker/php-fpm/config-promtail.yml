@@ -1,0 +1,34 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://172.31.2.10:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: laravel
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: laravel
+      __path__: /var/www/html/storage/logs/laravel.log
+
+- job_name: swoole_log
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: swoole_log
+      __path__: /var/log/laravel_s_stdout.log
+
+- job_name: nginx_mlc_Log
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: nginx_mlc_log
+      __path__: /var/log/nginx/nginx_laravel_s.access.log

@@ -1,0 +1,56 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://172.31.2.10:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: laravel_db
+  static_configs:
+
+
+
+- job_name: ml_db_odds_worker
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: ml_db_odds_worker
+      __path__: /var/www/html/storage/logs/laravel-scraping-odds.log
+
+- job_name: ml_db_events_worker
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: ml_db_events_worker
+      __path__: /var/www/html/storage/logs/laravel-scraping-provider-events.log
+
+- job_name: ml_db_default
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: ml_db_default
+      __path__: /var/www/html/storage/logs/laravel.log
+
+- job_name: ml_db_odds_command
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: ml_db_odds_command
+      __path__: /var/log/scraping_odds_stdout.log
+
+
+- job_name: ml_db_events_command
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: ml_db_events_command
+      __path__: /var/log/scraping_provider_events_stdout.log

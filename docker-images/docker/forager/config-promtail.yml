@@ -1,0 +1,83 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://172.31.2.10:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: hg_balance
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: hg_balance
+      __path__: /var/log/hg_balance_stdout.log
+
+- job_name: hg_bet
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: hg_bet
+      __path__: /var/log/hg_bet_stdout.log
+
+- job_name: hg_login
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: hg_login
+      __path__: /var/log/hg_login_stdout.log
+
+- job_name: hg_minnmax
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: hg_minmax
+      __path__: /var/log/hg_minmax_stdout.log
+
+- job_name: hg_odds
+  static_configs:
+  - targets:
+      - 172.31.2.10    
+    labels:
+      job: hg_odds
+      __path__: /var/log/hg_odds_stdout.log
+
+- job_name: hg_orders
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: hg_orders
+      __path__: /var/log/hg_orders_stdout.log
+
+- job_name: hg_session
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: hg_session
+      __path__: /var/log/hg_session_stdout.log
+
+- job_name: hg_settlement
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: hg_setlement
+      __path__: /var/log/hg_settlement_stdout.log
+
+- job_name: hg_heartbeat
+  static_configs:
+  - targets:
+      - 172.31.2.10
+    labels:
+      job: hg_heartbeat
+      __path__: /var/log/hg_heartbeat_stdout.log
+

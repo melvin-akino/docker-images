@@ -1,0 +1,46 @@
+FROM phpdockerio/php73-fpm:latest
+
+RUN mkdir /frontend
+WORKDIR "/frontend"
+
+# Fix debconf warnings upon build
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Install selected extensions and other stuff
+RUN apt-get update \
+    && apt-get -y --no-install-recommends install php-memcached php7.3-pgsql php-redis php7.3-gd php7.3-xsl php7.3-bcmath \
+    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+
+RUN apt-get update \
+	&& apt-get -y --no-install-recommends install php7.3-sqlite3
+
+RUN apt-get update \
+    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+    && apt-get -y install nodejs
+
+# Install git
+RUN apt-get update \
+    && apt-get -y install git \
+    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+
+RUN apt-get update -y
+RUN apt-get -y install php-pear php7.3-dev libyaml-dev 
+RUN pecl install swoole
+
+RUN apt-get update  && apt-get -y install supervisor
+COPY 100-swoole.ini /etc/php/7.2/cli/conf.d/100-swoole.ini
+
+RUN apt-get install -y librdkafka-dev
+RUN pecl install rdkafka-3.0.3
+
+COPY 200-rdkafka.ini /etc/php/7.2/cli/conf.d/200-rdkafka.ini
+
+RUN apt-get install -y supervisor nginx vim nano
+
+EXPOSE 80:80
+
+EXPOSE 8080/tcp
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+
