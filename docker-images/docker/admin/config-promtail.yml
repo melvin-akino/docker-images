@@ -1,0 +1,26 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://192.168.2.53:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: laravel_mladmin
+  static_configs:
+  - targets:
+      - 192.168.2.53
+    labels:
+      job: laravel_mladmin
+      __path__: /var/www/html/storage/logs/laravel.log
+
+- job_name: nginx_mladmin_Log
+  static_configs:
+  - targets:
+      - 192.168.2.53
+    labels:
+      job: nginx_mladmin_log
+      __path__: /var/log/nginx/access.log
