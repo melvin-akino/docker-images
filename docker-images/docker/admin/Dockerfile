@@ -8,7 +8,7 @@ RUN apt-get update
 RUN apt install -y software-properties-common
 RUN add-apt-repository ppa:ondrej/php
 
-RUN  apt-get update && apt-get install -y  php7.3 php7.3-cli php7.3-xml php7.3-soap php7.3-xmlrpc php7.3-mbstring php7.3-json php7.3-gd  php7.3-mbstring php7.3-pgsql  php7.3-xml php7.3-soap php7.3-xmlrpc php7.3-mbstring php7.3-curl php7.3-json php7.3-gd  php7.3-mbstring php7.3-zip   php7.3-bcmath php7.3-dev php-redis php7.3-sqlite3 php-pear libyaml-dev 
+RUN  apt-get update && apt-get install -y  php7.3 php7.3-cli php7.3-xml php7.3-soap php7.3-xmlrpc php7.3-mbstring php7.3-json php7.3-gd  php7.3-mbstring php7.3-pgsql  php7.3-xml php7.3-soap php7.3-xmlrpc php7.3-mbstring php7.3-curl php7.3-json php7.3-gd  php7.3-mbstring php7.3-zip   php7.3-bcmath php7.3-dev php-redis php7.3-sqlite3 php-pear libyaml-dev php7.3-fpm 
 
 RUN  curl -sS https://getcomposer.org/installer |php
 RUN  mv composer.phar /usr/local/bin/composer
@@ -68,7 +68,7 @@ RUN mkdir /php-rdkafka  && cd /php-rdkafka \
 
 COPY 200-rdkafka.ini /etc/php/7.3/cli/conf.d/200-rdkafka.ini
 
-RUN service apache2 stop
+#RUN service apache2 stop
 COPY nginx.conf /etc/nginx/sites-available/default
 COPY node_exporter.conf /etc/supervisor/conf.d/node_exporter.conf
 COPY StartKafaBalanceMonitoring.conf /etc/supervisor/conf.d/StartKafaBalanceMonitoring.conf
@@ -77,7 +77,7 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 COPY 502.html /var/www/502.html
 WORKDIR "/var/www/html"
-RUN rm "/var/www/html/index.html"
+#RUN rm "/var/www/html/index.html"
 RUN rm "/var/www/html/index.nginx-debian.html"
 
 RUN ["/bin/bash", "-c", "echo hello all in one string"]
