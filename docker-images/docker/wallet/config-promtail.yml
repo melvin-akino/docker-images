@@ -1,0 +1,25 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://192.168.2.53:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: laravel_mlwallet
+  - targets:
+      - 192.168.2.53
+    labels:
+      job: laravel_mlwallet
+      __path__: /var/www/html/storage/logs/laravel.log
+
+- job_name: nginx_mlwallet_log
+  static_configs:
+  - targets:
+      - 192.168.2.53
+    labels:
+      job: nginx_mlwallet_log
+      __path__: /var/log/nginx/access.log
