@@ -35,6 +35,7 @@ RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
     && dpkg-reconfigure --frontend noninteractive tzdata
 
 #certbot
+RUN apt-get update
 RUN apt-get install -y certbot python3-certbot-nginx
 
 # MONITORING TOOL
