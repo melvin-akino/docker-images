@@ -17,7 +17,7 @@ RUN apt-get update \
     && apt-get -y install git \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
-RUN apt-get update && apt-get install -y nano vim htop iputils-ping telnetd net-tools tmux xz-utils dnsutils snapd fuse
+RUN apt-get update && apt-get install -y wget nano vim htop iputils-ping telnetd net-tools tmux xz-utils dnsutils snapd fuse
 
 #add cronjob
 RUN apt-get update && apt-get install cron
@@ -52,11 +52,13 @@ COPY nginx.conf /etc/nginx/sites-available/default
 COPY node_exporter.conf /etc/supervisor/conf.d/node_exporter.conf
 COPY promtail.conf /etc/supervisor/conf.d/promtail.conf
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
 COPY 502.html /var/www/502.html
 WORKDIR "/var/www/html"
-RUN rm "/var/www/html/index.nginx-debian.html"
 
+RUN rm "/var/www/html/index.nginx-debian.html"
 RUN ["/bin/bash", "-c", "echo hello all in one string"]
+
 CMD ["/entrypoint.sh"]
 EXPOSE 80 443

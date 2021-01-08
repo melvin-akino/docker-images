@@ -1,5 +1,6 @@
-service apache2 stop
-systemctl restart php7.3-fpm.service
+#!/bin/sh
+service php7.3-fpm stop
+service php7.3-fpm start
 service nginx start
 service supervisor start
 tail -f /dev/null
