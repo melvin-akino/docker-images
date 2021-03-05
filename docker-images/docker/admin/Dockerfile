@@ -68,6 +68,7 @@ RUN mkdir /php-rdkafka  && cd /php-rdkafka \
 
 
 COPY 200-rdkafka.ini /etc/php/7.3/cli/conf.d/200-rdkafka.ini
+COPY 200-rdkafka.ini /etc/php/7.3/fpm/conf.d/200-rdkafka.ini
 
 #RUN service apache2 stop
 COPY nginx.conf /etc/nginx/sites-available/default
