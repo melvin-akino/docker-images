@@ -31,19 +31,20 @@ RUN cd /tmp && git clone https://github.com/arnaud-lb/php-rdkafka.git && \
 # RUN pecl install  swoole
 RUN cd /tmp && git clone https://github.com/swoole/swoole-src.git && \
     cd swoole-src && \
-    git checkout v4.6.3 && \
+    git checkout v4.7.0 && \
     phpize && \
     ./configure && \
     make && make install
 
 RUN cd /tmp && git clone https://github.com/swoole/ext-postgresql.git && \
     cd ext-postgresql && \
+    git checkout v4.6.1 && \
     phpize && \
     ./configure && \
     make && make install
 
-RUN cd /tmp && https://github.com/phpredis/phpredis.git && \
-    cd ext-phpredis && \
+RUN cd /tmp && git clone https://github.com/phpredis/phpredis.git && \
+    cd phpredis && \
     phpize && \
     ./configure && \
     make && make install
