@@ -33,7 +33,7 @@ RUN cd /tmp && git clone https://github.com/swoole/swoole-src.git && \
     cd swoole-src && \
     git checkout v4.7.0 && \
     phpize && \
-    ./configure && \
+    ./configure --enable-openssl && \
     make && make install
 
 RUN cd /tmp && git clone https://github.com/swoole/ext-postgresql.git && \
